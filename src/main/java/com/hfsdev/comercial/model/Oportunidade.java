@@ -1,12 +1,16 @@
 package com.hfsdev.comercial.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Oportunidade implements Serializable {
@@ -15,21 +19,28 @@ public class Oportunidade implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
+	@NotEmpty
+	@Size(max = 80)
 	@Column(name = "nome_prospecto")
 	private String nomeProspecto;
-	
+
+	@NotEmpty
+	@Size(max = 200)
 	private String descricao;
-	private double valor;
+	
+	@Min(0)
+	private BigDecimal valor;
 	
 	public Oportunidade() {
 	}
 	
-	public Oportunidade(Long id, String nomeProspecto, String descricao, double d) {
+	public Oportunidade(Long id, String nomeProspecto, String descricao, BigDecimal valor) {
 		super();
 		this.id = id;
 		this.nomeProspecto = nomeProspecto;
 		this.descricao = descricao;
-		this.valor = d;
+		this.valor = valor;
 	}
 	public Long getId() {
 		return id;
@@ -49,10 +60,10 @@ public class Oportunidade implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 	@Override
